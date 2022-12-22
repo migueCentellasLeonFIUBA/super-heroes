@@ -1,0 +1,11 @@
+INSERT INTO superheroes (nombre,   creador ) VALUES('SpiderMan', 'Marvel'  );
+INSERT INTO superheroes (nombre,   creador ) VALUES('Batman', 'WarnerBros'  );
+INSERT INTO superheroes (nombre,   creador ) VALUES('SuperMan', 'WarnerBros'  );
+INSERT INTO superheroes (nombre,   creador ) VALUES('Flash', 'WarnerBros'  );
+INSERT INTO superheroes (nombre,   creador ) VALUES('IronMan', 'Marvel'  );
+INSERT INTO superheroes (nombre,   creador ) VALUES('Hulk', 'Marvel'  );
+INSERT INTO superheroes (nombre,   creador ) VALUES('CapitanAmerica', 'Marvel'  );
+INSERT INTO superheroes (nombre,   creador ) VALUES('Wolverine', 'Marvel'  );
+INSERT INTO superheroes (nombre,   creador ) VALUES('WarMachine', 'Marvel'  );
+INSERT INTO superheroes (nombre,   creador ) VALUES('CapitanComando', 'Capcom'  );
+INSERT INTO superheroes (nombre,   creador ) VALUES('MegaMan', 'Capcom'  );
