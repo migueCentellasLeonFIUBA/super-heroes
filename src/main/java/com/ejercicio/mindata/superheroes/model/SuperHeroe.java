@@ -22,4 +22,7 @@ public class SuperHeroe {
     @Column(name = "nombre",nullable = false)
     private String nombre;
 
+    @Column(name = "creador",nullable = false)
+    private String creador;
+
 }

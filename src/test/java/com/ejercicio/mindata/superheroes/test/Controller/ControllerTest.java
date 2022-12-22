@@ -50,16 +50,17 @@ public class ControllerTest {
     void testConsultarTodosLosHeroes() throws Exception{
         //given
         List<SuperHeroe> listSuperHeroes = new ArrayList<>();
-        listSuperHeroes.add(SuperHeroe.builder().nombre("SpiderMan").build());
-        listSuperHeroes.add(SuperHeroe.builder().nombre("Batman").build());
-        listSuperHeroes.add(SuperHeroe.builder().nombre("SuperMan").build());
-        listSuperHeroes.add(SuperHeroe.builder().nombre("Flash").build());
-        listSuperHeroes.add(SuperHeroe.builder().nombre("IronMan").build());
-        listSuperHeroes.add(SuperHeroe.builder().nombre("Hulk").build());
-        listSuperHeroes.add(SuperHeroe.builder().nombre("CapitanAmerica").build());
-        listSuperHeroes.add(SuperHeroe.builder().nombre("Wolverine").build());
-        listSuperHeroes.add(SuperHeroe.builder().nombre("WarMachine").build());
-        listSuperHeroes.add(SuperHeroe.builder().nombre("CapitanComando").build());
+        listSuperHeroes.add(SuperHeroe.builder().nombre("SpiderMan").creador("Marvel").build());
+        listSuperHeroes.add(SuperHeroe.builder().nombre("Batman").creador("WarnerBros").build());
+        listSuperHeroes.add(SuperHeroe.builder().nombre("SuperMan").creador("WarnerBros").build());
+        listSuperHeroes.add(SuperHeroe.builder().nombre("Flash").creador("WarnerBros").build());
+        listSuperHeroes.add(SuperHeroe.builder().nombre("IronMan").creador("Marvel").build());
+        listSuperHeroes.add(SuperHeroe.builder().nombre("Hulk").creador("Marvel").build());
+        listSuperHeroes.add(SuperHeroe.builder().nombre("CapitanAmerica").creador("Marvel").build());
+        listSuperHeroes.add(SuperHeroe.builder().nombre("Wolverine").creador("Marvel").build());
+        listSuperHeroes.add(SuperHeroe.builder().nombre("WarMachine").creador("Marvel").build());
+        listSuperHeroes.add(SuperHeroe.builder().nombre("CapitanComando").creador("Capcom").build());
+        listSuperHeroes.add(SuperHeroe.builder().nombre("MegaMan").creador("Capcom").build());
 
         given(superHeroeService.getAllSuperHeroes()).willReturn(listSuperHeroes);
 
