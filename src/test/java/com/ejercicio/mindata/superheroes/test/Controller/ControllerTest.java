@@ -91,4 +91,19 @@ public class ControllerTest {
                 .andExpect(jsonPath("$.creador",is(superHeroe.getCreador())));
     }
 
+    @Test
+    void testIntentarObtenerSuperHeroeNoExistente() throws Exception{
+        //given
+        long empleadoId = 1L;
+        SuperHeroe superHeroe = SuperHeroe.builder().nombre("SpiderMan").creador("Marvel").build();
+        given(superHeroeService.getSuperHeroeById(empleadoId)).willReturn(Optional.empty());
+
+        //when
+        ResultActions response = mockMvc.perform(get("/api/empleados/{id}",empleadoId));
+
+        //then
+        response.andExpect(status().isNotFound())
+                .andDo(print());
+    }
+
 }
