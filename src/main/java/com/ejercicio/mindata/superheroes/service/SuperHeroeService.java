@@ -10,4 +10,6 @@ public interface SuperHeroeService {
     Optional<SuperHeroe> getSuperHeroeById(long superHeroeId);
 
     List<SuperHeroe> getAllSuperHeroes();
+
+    List<SuperHeroe> getSuperHeroePorPalabra(String palabra);
 }

@@ -99,11 +99,29 @@ public class ControllerTest {
         given(superHeroeService.getSuperHeroeById(empleadoId)).willReturn(Optional.empty());
 
         //when
-        ResultActions response = mockMvc.perform(get("/api/empleados/{id}",empleadoId));
+        ResultActions response = mockMvc.perform(get("/api/superHeroes/{id}",empleadoId));
 
         //then
         response.andExpect(status().isNotFound())
                 .andDo(print());
+    }
+
+    @Test
+    void testObtenerSuperHeroeQueContengaCiertaPalabra() throws Exception{
+        //given
+        String palabraBuscada = "capitan";
+        List<SuperHeroe> listSuperHeroes = new ArrayList<>();
+        listSuperHeroes.add(SuperHeroe.builder().nombre("CapitanAmerica").creador("Marvel").build());
+        listSuperHeroes.add(SuperHeroe.builder().nombre("CapitanComando").creador("Capcom").build());
+        given(superHeroeService.getSuperHeroePorPalabra(palabraBuscada)).willReturn(listSuperHeroes);
+
+        //when
+        ResultActions response = mockMvc.perform(get("/api/superHeroes/porPalabra/{palabra}",palabraBuscada));
+
+        //then
+        response.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.size()",is(listSuperHeroes.size())));
     }
 
 }

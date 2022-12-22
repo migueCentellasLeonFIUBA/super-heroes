@@ -29,4 +29,9 @@ public class SuperHeroeController {
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping("porPalabra/{palabra}")
+    public List<SuperHeroe> obtenerSuperHeroePorPalabra(@PathVariable("palabra") String palabra){
+        return superHeroeService.getSuperHeroePorPalabra(palabra);
+    }
 }

@@ -24,4 +24,9 @@ public class SuperHeroeServiceImpl implements SuperHeroeService {
     public List<SuperHeroe> getAllSuperHeroes() {
         return superHeroeRepository.findAll();
     }
+
+    @Override
+    public List<SuperHeroe> getSuperHeroePorPalabra(String palabra) {
+        return superHeroeRepository.findByNombreContainingIgnoreCase(palabra);
+    }
 }
