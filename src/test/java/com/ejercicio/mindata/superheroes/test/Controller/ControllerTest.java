@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.BDDMockito.given;
@@ -70,8 +71,24 @@ public class ControllerTest {
         //then
         response.andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(jsonPath("$.size()",is(listSuperHeroes.size())))
-        ;
+                .andExpect(jsonPath("$.size()",is(listSuperHeroes.size())));
+    }
+
+    @Test
+    void testObtenerSuperHeroePorId() throws Exception{
+        //given
+        long superHeroeId = 1L;
+        SuperHeroe superHeroe = SuperHeroe.builder().nombre("SpiderMan").creador("Marvel").build();
+        given(superHeroeService.getSuperHeroeById(superHeroeId)).willReturn(Optional.of(superHeroe));
+
+        //when
+        ResultActions response = mockMvc.perform(get("/api/superHeroes/{id}",superHeroeId));
+
+        //then
+        response.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.nombre",is(superHeroe.getNombre())))
+                .andExpect(jsonPath("$.creador",is(superHeroe.getCreador())));
     }
 
 }

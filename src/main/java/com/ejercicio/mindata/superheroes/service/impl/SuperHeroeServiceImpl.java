@@ -7,12 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SuperHeroeServiceImpl implements SuperHeroeService {
 
     @Autowired
     private SuperHeroeRepository superHeroeRepository;
+
+    @Override
+    public  Optional<SuperHeroe> getSuperHeroeById(long superHeroeId) {
+        return null;
+    }
 
     @Override
     public List<SuperHeroe> getAllSuperHeroes() {
