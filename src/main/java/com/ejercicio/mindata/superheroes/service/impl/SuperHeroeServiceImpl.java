@@ -17,7 +17,7 @@ public class SuperHeroeServiceImpl implements SuperHeroeService {
 
     @Override
     public  Optional<SuperHeroe> getSuperHeroeById(long superHeroeId) {
-        return null;
+        return superHeroeRepository.findById(superHeroeId);
     }
 
     @Override
