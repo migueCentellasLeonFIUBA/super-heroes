@@ -2,11 +2,13 @@ package com.ejercicio.mindata.superheroes.test.Controller;
 
 import com.ejercicio.mindata.superheroes.model.SuperHeroe;
 import com.ejercicio.mindata.superheroes.service.SuperHeroeService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -15,8 +17,10 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -31,6 +35,9 @@ public class ControllerTest {
 
     @MockBean
     private SuperHeroeService superHeroeService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
     void testPruebaInicial() throws Exception{
@@ -124,4 +131,26 @@ public class ControllerTest {
                 .andExpect(jsonPath("$.size()",is(listSuperHeroes.size())));
     }
 
+    @Test
+    void testModificarSuperHeroe() throws Exception{
+        //given
+        long superHeroeId = 1L;
+        SuperHeroe superHeroeInicial = SuperHeroe.builder().nombre("SpiderMan").creador("Marvel").build();
+        SuperHeroe superHeroeModificado = SuperHeroe.builder().nombre("HombreAraña").creador("Marvel").build();
+
+        given(superHeroeService.getSuperHeroeById(superHeroeId)).willReturn(Optional.of(superHeroeInicial));
+        given(superHeroeService.updateSuperHeroe(any(SuperHeroe.class)))
+                .willAnswer((invocation) -> invocation.getArgument(0));
+
+        //when
+        ResultActions response = mockMvc.perform(put("/api/superHeroes/{id}",superHeroeId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(superHeroeModificado)));
+
+        //then
+        response.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.nombre",is(superHeroeModificado.getNombre())))
+                .andExpect(jsonPath("$.creador",is(superHeroeModificado.getCreador())));
+    }
 }
