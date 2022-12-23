@@ -1,14 +1,11 @@
 package com.ejercicio.mindata.superheroes.service.impl;
 
+import com.ejercicio.mindata.superheroes.exception.ResourceNotFoundException;
 import com.ejercicio.mindata.superheroes.model.SuperHeroe;
 import com.ejercicio.mindata.superheroes.repository.SuperHeroeRepository;
 import com.ejercicio.mindata.superheroes.service.SuperHeroeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +39,9 @@ public class SuperHeroeServiceImpl implements SuperHeroeService {
     @Override
     public Optional<SuperHeroe> updateSuperHeroe(long superHeroeId, SuperHeroe superHeroe) {
        Optional<SuperHeroe> superHeroeObtenido = superHeroeRepository.findById(superHeroeId);
+        if(!superHeroeObtenido.isPresent()){
+            throw new ResourceNotFoundException("No existe SuperHeroe con Id: "+ superHeroeId);
+        }
        return superHeroeObtenido.map(superHeroeSaved -> {
             superHeroeSaved.setNombre(superHeroe.getNombre());
             superHeroeSaved.setCreador(superHeroe.getCreador());
