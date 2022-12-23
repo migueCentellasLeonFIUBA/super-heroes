@@ -16,4 +16,6 @@ public interface SuperHeroeService {
     SuperHeroe updateSuperHeroe(SuperHeroe any);
 
     Optional<SuperHeroe> updateSuperHeroe(long superHeroeId, SuperHeroe superHeroe);
+
+    void deleteSuperHeroe(long superHeroeId);
 }

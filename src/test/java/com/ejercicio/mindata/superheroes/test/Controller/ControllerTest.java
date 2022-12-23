@@ -20,8 +20,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -132,7 +132,19 @@ public class ControllerTest {
                 .andExpect(jsonPath("$.size()",is(listSuperHeroes.size())));
     }
 
+    @Test
+    void testEliminarSuperHeroe() throws Exception{
+        //given
+        long superHeroeId = 1L;
+        willDoNothing().given(superHeroeService).deleteSuperHeroe(superHeroeId);
 
+        //when
+        ResultActions response = mockMvc.perform(delete("/api/superHeroes/{id}",superHeroeId));
+
+        //then
+        response.andExpect(status().isOk())
+                .andDo(print());
+    }
 
 
 }

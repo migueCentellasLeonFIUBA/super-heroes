@@ -51,4 +51,9 @@ public class SuperHeroeServiceImpl implements SuperHeroeService {
 
     }
 
+    @Override
+    public void deleteSuperHeroe(long superHeroeId) {
+        superHeroeRepository.deleteById(superHeroeId);
+    }
+
 }

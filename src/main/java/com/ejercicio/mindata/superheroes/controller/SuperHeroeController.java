@@ -39,4 +39,10 @@ public class SuperHeroeController {
                 .map(superHeroeSaved -> new ResponseEntity<>(superHeroeSaved, HttpStatus.OK))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarEmpleado(@PathVariable("id") long superHeroeId){
+        superHeroeService.deleteSuperHeroe(superHeroeId);
+        return new ResponseEntity<String>("Empleado eliminado exitosamente",HttpStatus.OK);
+    }
 }
