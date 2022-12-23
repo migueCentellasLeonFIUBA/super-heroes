@@ -35,13 +35,8 @@ public class SuperHeroeController {
 
     @PutMapping("/{id}")
     public ResponseEntity<SuperHeroe> actualizarEmpleado(@PathVariable("id") long superHeroeId,@RequestBody SuperHeroe superHeroe){
-        return superHeroeService.getSuperHeroeById(superHeroeId)
-                .map(superHeroeSaved -> {
-                    superHeroeSaved.setNombre(superHeroe.getNombre());
-                    superHeroeSaved.setCreador(superHeroe.getCreador());
-                    SuperHeroe superHeroeUp = superHeroeService.updateSuperHeroe(superHeroeSaved);
-                    return new ResponseEntity<>(superHeroeUp, HttpStatus.OK);
-                })
+        return superHeroeService.updateSuperHeroe(superHeroeId,superHeroe)
+                .map(superHeroeSaved -> new ResponseEntity<>(superHeroeSaved, HttpStatus.OK))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

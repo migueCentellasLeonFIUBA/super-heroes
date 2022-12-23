@@ -14,4 +14,6 @@ public interface SuperHeroeService {
     List<SuperHeroe> getSuperHeroePorPalabra(String palabra);
 
     SuperHeroe updateSuperHeroe(SuperHeroe any);
+
+    Optional<SuperHeroe> updateSuperHeroe(long superHeroeId, SuperHeroe superHeroe);
 }

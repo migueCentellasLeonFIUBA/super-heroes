@@ -4,7 +4,11 @@ import com.ejercicio.mindata.superheroes.model.SuperHeroe;
 import com.ejercicio.mindata.superheroes.repository.SuperHeroeRepository;
 import com.ejercicio.mindata.superheroes.service.SuperHeroeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,4 +38,17 @@ public class SuperHeroeServiceImpl implements SuperHeroeService {
     public SuperHeroe updateSuperHeroe(SuperHeroe superHeroe) {
         return superHeroeRepository.save(superHeroe);
     }
+
+    @Override
+    public Optional<SuperHeroe> updateSuperHeroe(long superHeroeId, SuperHeroe superHeroe) {
+       Optional<SuperHeroe> superHeroeObtenido = superHeroeRepository.findById(superHeroeId);
+       return superHeroeObtenido.map(superHeroeSaved -> {
+            superHeroeSaved.setNombre(superHeroe.getNombre());
+            superHeroeSaved.setCreador(superHeroe.getCreador());
+            SuperHeroe superHeroeUp = updateSuperHeroe(superHeroeSaved);
+            return Optional.of(superHeroeUp);
+        }).orElseGet(() -> Optional.empty());
+
+    }
+
 }

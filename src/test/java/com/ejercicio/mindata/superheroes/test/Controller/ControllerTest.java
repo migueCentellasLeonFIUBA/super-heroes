@@ -18,6 +18,7 @@ import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -131,26 +132,7 @@ public class ControllerTest {
                 .andExpect(jsonPath("$.size()",is(listSuperHeroes.size())));
     }
 
-    @Test
-    void testModificarSuperHeroe() throws Exception{
-        //given
-        long superHeroeId = 1L;
-        SuperHeroe superHeroeInicial = SuperHeroe.builder().nombre("SpiderMan").creador("Marvel").build();
-        SuperHeroe superHeroeModificado = SuperHeroe.builder().nombre("HombreAraña").creador("Marvel").build();
 
-        given(superHeroeService.getSuperHeroeById(superHeroeId)).willReturn(Optional.of(superHeroeInicial));
-        given(superHeroeService.updateSuperHeroe(any(SuperHeroe.class)))
-                .willAnswer((invocation) -> invocation.getArgument(0));
 
-        //when
-        ResultActions response = mockMvc.perform(put("/api/superHeroes/{id}",superHeroeId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(superHeroeModificado)));
 
-        //then
-        response.andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(jsonPath("$.nombre",is(superHeroeModificado.getNombre())))
-                .andExpect(jsonPath("$.creador",is(superHeroeModificado.getCreador())));
-    }
 }
