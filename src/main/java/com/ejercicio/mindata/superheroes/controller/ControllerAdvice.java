@@ -20,7 +20,7 @@ public class ControllerAdvice {
     }
 
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity<ErrorDTO> HttpRequestMethodNotSupportedExceptionHandler(){
+    public ResponseEntity<ErrorDTO> httpRequestMethodNotSupportedExceptionHandler(){
         ErrorDTO error = ErrorDTO.builder().message("Metodo No Permitido").build();
         return new ResponseEntity<>(error, HttpStatus.METHOD_NOT_ALLOWED);
     }
@@ -33,7 +33,7 @@ public class ControllerAdvice {
 
     @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorDTO> methodArgumentTypeMismatchExceptionHandler() {
-        ErrorDTO error = ErrorDTO.builder().message("El Id es de valor numerico").build();
+        ErrorDTO error = ErrorDTO.builder().message("El Id debe ser de valor numerico").build();
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }

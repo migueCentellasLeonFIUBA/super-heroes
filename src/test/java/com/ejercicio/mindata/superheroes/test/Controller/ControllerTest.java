@@ -100,12 +100,12 @@ public class ControllerTest {
     @Test
     void testIntentarObtenerSuperHeroeNoExistente() throws Exception{
         //given
-        long empleadoId = 1L;
+        long superHeroeId = 1L;
         SuperHeroe superHeroe = SuperHeroe.builder().nombre("SpiderMan").creador("Marvel").build();
-        given(superHeroeService.getSuperHeroeById(empleadoId)).willReturn(Optional.empty());
+        given(superHeroeService.getSuperHeroeById(superHeroeId)).willReturn(Optional.empty());
 
         //when
-        ResultActions response = mockMvc.perform(get("/api/superHeroes/{id}",empleadoId));
+        ResultActions response = mockMvc.perform(get("/api/superHeroes/{id}",superHeroeId));
 
         //then
         response.andExpect(status().isNotFound())

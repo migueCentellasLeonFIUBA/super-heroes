@@ -34,15 +34,15 @@ public class SuperHeroeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SuperHeroe> actualizarEmpleado(@PathVariable("id") long superHeroeId,@RequestBody SuperHeroe superHeroe){
+    public ResponseEntity<SuperHeroe> actualizarSuperHeroe(@PathVariable("id") long superHeroeId,@RequestBody SuperHeroe superHeroe){
         return superHeroeService.updateSuperHeroe(superHeroeId,superHeroe)
                 .map(superHeroeSaved -> new ResponseEntity<>(superHeroeSaved, HttpStatus.OK))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarEmpleado(@PathVariable("id") long superHeroeId){
+    public ResponseEntity<String> eliminarSuperHeroe(@PathVariable("id") long superHeroeId){
         superHeroeService.deleteSuperHeroe(superHeroeId);
-        return new ResponseEntity<String>("Empleado eliminado exitosamente",HttpStatus.OK);
+        return new ResponseEntity<String>("SuperHeroe eliminado exitosamente",HttpStatus.OK);
     }
 }

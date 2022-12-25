@@ -5,6 +5,9 @@ import com.ejercicio.mindata.superheroes.model.SuperHeroe;
 import com.ejercicio.mindata.superheroes.repository.SuperHeroeRepository;
 import com.ejercicio.mindata.superheroes.service.SuperHeroeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +25,7 @@ public class SuperHeroeServiceImpl implements SuperHeroeService {
     }
 
     @Override
+    @Cacheable("superHeroes")
     public List<SuperHeroe> getAllSuperHeroes() {
         return superHeroeRepository.findAll();
     }
@@ -36,6 +40,9 @@ public class SuperHeroeServiceImpl implements SuperHeroeService {
         return superHeroeRepository.save(superHeroe);
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = "superHeroes", allEntries = true)
+    })
     @Override
     public Optional<SuperHeroe> updateSuperHeroe(long superHeroeId, SuperHeroe superHeroe) {
        Optional<SuperHeroe> superHeroeObtenido = superHeroeRepository.findById(superHeroeId);
@@ -51,6 +58,9 @@ public class SuperHeroeServiceImpl implements SuperHeroeService {
 
     }
 
+  @Caching(evict = {
+            @CacheEvict(value = "superHeroes", allEntries = true)
+    })
     @Override
     public void deleteSuperHeroe(long superHeroeId) {
         superHeroeRepository.deleteById(superHeroeId);
