@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,11 +21,13 @@ public class SuperHeroeServiceImpl implements SuperHeroeService {
     private SuperHeroeRepository superHeroeRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public  Optional<SuperHeroe> getSuperHeroeById(long superHeroeId) {
         return superHeroeRepository.findById(superHeroeId);
     }
 
     @Override
+    @Transactional(readOnly = true)
     @Cacheable("superHeroes")
     public List<SuperHeroe> getAllSuperHeroes() {
         return superHeroeRepository.findAll();
@@ -36,6 +39,7 @@ public class SuperHeroeServiceImpl implements SuperHeroeService {
     }
 
     @Override
+    @Transactional
     public SuperHeroe updateSuperHeroe(SuperHeroe superHeroe) {
         return superHeroeRepository.save(superHeroe);
     }
@@ -44,9 +48,10 @@ public class SuperHeroeServiceImpl implements SuperHeroeService {
             @CacheEvict(value = "superHeroes", allEntries = true)
     })
     @Override
+    @Transactional
     public Optional<SuperHeroe> updateSuperHeroe(long superHeroeId, SuperHeroe superHeroe) {
        Optional<SuperHeroe> superHeroeObtenido = superHeroeRepository.findById(superHeroeId);
-        if(!superHeroeObtenido.isPresent()){
+        if(superHeroeObtenido.isEmpty()){
             throw new ResourceNotFoundException("No existe SuperHeroe con Id: "+ superHeroeId);
         }
        return superHeroeObtenido.map(superHeroeSaved -> {
@@ -54,13 +59,14 @@ public class SuperHeroeServiceImpl implements SuperHeroeService {
             superHeroeSaved.setCreador(superHeroe.getCreador());
             SuperHeroe superHeroeUp = updateSuperHeroe(superHeroeSaved);
             return Optional.of(superHeroeUp);
-        }).orElseGet(() -> Optional.empty());
+        }).orElseGet(Optional::empty);
 
     }
 
   @Caching(evict = {
             @CacheEvict(value = "superHeroes", allEntries = true)
     })
+    @Transactional
     @Override
     public void deleteSuperHeroe(long superHeroeId) {
         superHeroeRepository.deleteById(superHeroeId);
