@@ -18,6 +18,7 @@ import java.util.Optional;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -37,21 +38,6 @@ public class ControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
-
-    @Test
-    void testPruebaInicial() throws Exception{
-        //given
-        List<Object> listSuperHeroes = new ArrayList<>();
-
-        //when
-        ResultActions response = mockMvc.perform(get("/listar"));
-
-        //then
-        response.andExpect(status().isNotFound())
-                .andDo(print())
-        //.andExpect(jsonPath("$.size()",is(9)))
-        ;
-    }
 
     @Test
     void testConsultarTodosLosHeroes() throws Exception{
@@ -137,7 +123,7 @@ public class ControllerTest {
         willDoNothing().given(superHeroeService).deleteSuperHeroe(superHeroeId);
 
         //when
-        ResultActions response = mockMvc.perform(delete("/api/superHeroes/{id}",superHeroeId));
+        ResultActions response = mockMvc.perform(delete("/api/superHeroes/{id}",superHeroeId).with(user("admin").password("admin").roles("ADMIN")));
 
         //then
         response.andExpect(status().isOk())

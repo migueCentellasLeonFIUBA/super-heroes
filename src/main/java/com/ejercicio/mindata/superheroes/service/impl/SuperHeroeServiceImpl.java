@@ -4,7 +4,6 @@ import com.ejercicio.mindata.superheroes.exception.ResourceNotFoundException;
 import com.ejercicio.mindata.superheroes.model.SuperHeroe;
 import com.ejercicio.mindata.superheroes.repository.SuperHeroeRepository;
 import com.ejercicio.mindata.superheroes.service.SuperHeroeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
@@ -16,9 +15,11 @@ import java.util.Optional;
 
 @Service
 public class SuperHeroeServiceImpl implements SuperHeroeService {
+    private final SuperHeroeRepository superHeroeRepository;
 
-    @Autowired
-    private SuperHeroeRepository superHeroeRepository;
+    public SuperHeroeServiceImpl (SuperHeroeRepository superHeroeRepository){
+        this.superHeroeRepository = superHeroeRepository;
+    }
 
     @Override
     @Transactional(readOnly = true)
