@@ -10,6 +10,11 @@ $ java -jar super-heroes-0.0.1-SNAPSHOT.jar
 
 ## Documentacion tecnica (Swagger)
 
+Importante-Acceso:
+
+Nombre de usuario:**admin** <br>
+Contraseña:**admin**
+
 endpoint : localhost:8001/swagger-ui.html
 
 ## Docker
