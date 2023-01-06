@@ -56,7 +56,7 @@ public class SuperHeroeServiceTest {
     @Test
     void testEliminarEmpleado(){
         //given
-        long superHeroeId = 1L;
+        var superHeroeId = 1L;
         willDoNothing().given(superHeroeRepository).deleteById(superHeroeId);
 
         //when

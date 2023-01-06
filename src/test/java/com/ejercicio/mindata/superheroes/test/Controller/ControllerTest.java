@@ -65,7 +65,7 @@ public class ControllerTest {
     @Test
     void testObtenerSuperHeroePorId() throws Exception{
         //given
-        long superHeroeId = 1L;
+        var superHeroeId = 1L;
         SuperHeroe superHeroe = SuperHeroe.builder().nombre("SpiderMan").creador("Marvel").build();
         given(superHeroeService.getSuperHeroeById(superHeroeId)).willReturn(Optional.of(superHeroe));
 
@@ -82,7 +82,7 @@ public class ControllerTest {
     @Test
     void testIntentarObtenerSuperHeroeNoExistente() throws Exception{
         //given
-        long superHeroeId = 1L;
+        var superHeroeId = 1L;
         SuperHeroe superHeroe = SuperHeroe.builder().nombre("SpiderMan").creador("Marvel").build();
         given(superHeroeService.getSuperHeroeById(superHeroeId)).willReturn(Optional.empty());
 
@@ -97,7 +97,7 @@ public class ControllerTest {
     @Test
     void testObtenerSuperHeroeQueContengaCiertaPalabra() throws Exception{
         //given
-        String palabraBuscada = "capitan";
+        var palabraBuscada = "capitan";
         List<SuperHeroe> listSuperHeroes = new ArrayList<>();
         listSuperHeroes.add(SuperHeroe.builder().nombre("CapitanAmerica").creador("Marvel").build());
         listSuperHeroes.add(SuperHeroe.builder().nombre("CapitanComando").creador("Capcom").build());
@@ -115,7 +115,7 @@ public class ControllerTest {
     @Test
     void testEliminarSuperHeroe() throws Exception{
         //given
-        long superHeroeId = 1L;
+        var superHeroeId = 1L;
         willDoNothing().given(superHeroeService).deleteSuperHeroe(superHeroeId);
 
         //when
